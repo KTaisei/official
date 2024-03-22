@@ -1,0 +1,60 @@
+@charset "utf-8";
+/*========= LoadingのためのCSS ===============*/
+
+/* Loading背景画面設定　*/
+
+#splash {
+    /*fixedで全面に固定*/
+  position: fixed;
+  z-index: 999;
+  width: 100%;
+  height: 100%;
+  background:#333;
+  text-align:center;
+  color:#fff;
+}
+
+/* Loadingバー中央配置　*/
+#splash_text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+    z-index: 999;
+  width: 100%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+}
+
+/*IE11対策用バーの線の高さ※対応しなければ削除してください*/
+#splash_text svg{
+    height: 2px;
+}
+
+/*========= レイアウトのためのCSS ===============*/
+
+
+#container{
+    width:100%;
+    height: 100vh;
+    background: #666;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow-y: auto ;
+}
+
+
+a{
+    color: #333;
+}
+
+a:hover{
+     text-decoration: none;   
+}
+
+.TextTyping {
+    text-align: center;
+  }
+  
+ 

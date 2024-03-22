@@ -1,0 +1,12 @@
+.TextTyping {
+    overflow: hidden; /* テキストがはみ出さないようにする */
+    white-space: nowrap; /* テキストが自動で改行されないようにする */
+    margin: 0 auto; /* テキストを中央揃えにする */
+    letter-spacing: .15rem; /* 文字の間隔を設定 */
+    animation: typing 3.5s steps(40, end); /* アニメーションを設定 */
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}

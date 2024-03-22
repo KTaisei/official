@@ -1,0 +1,39 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #ddd;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  margin-top: 60px;
+}
+
+
+
+.sns-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.sns-item {
+  margin: 10px;
+}
+
+.sns-item img {
+  width: 100px;
+  height: 100px;
+}
+
+.sns-item a {
+  display: block;
+  margin-top: 10px;
+  text-decoration: none;
+  color: #333;
+}
