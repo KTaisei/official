@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Camera PWA</title>
+    <title>Web Camera App</title>
     <style>
         #videoElement {
             width: 100%;
             height: auto;
-            margin-bottom: 10px;
         }
         #captureButton {
             display: block;
-            margin: 0 auto;
+            margin: 10px auto;
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
@@ -23,49 +22,12 @@
     </style>
 </head>
 <body>
-    <h1>Camera PWA</h1>
+    <h1>Web Camera App</h1>
     <video id="videoElement" autoplay></video>
     <button id="captureButton">Capture</button>
     <div id="photoHolder"></div>
 
-    <script>
-        // Check if the browser supports service workers
-        if ('serviceWorker' in navigator) {
-            // Register the service worker
-            navigator.serviceWorker.register('service-worker.js');
-        }
-
-        const video = document.getElementById('videoElement');
-        const captureButton = document.getElementById('captureButton');
-        const photoHolder = document.getElementById('photoHolder');
-
-        // Get access to the camera
-        navigator.mediaDevices.getUserMedia({ video: true })
-            .then(stream => {
-                video.srcObject = stream;
-            })
-            .catch(err => {
-                console.error('Error accessing the camera:', err);
-            });
-
-        // Capture the image
-        captureButton.addEventListener('click', () => {
-            const canvas = document.createElement('canvas');
-            const context = canvas.getContext('2d');
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-            // Convert canvas to data URL
-            const imageDataURL = canvas.toDataURL('image/png');
-
-            // Create a new image element
-            const img = new Image();
-            img.src = imageDataURL;
-
-            // Append the image to the photo holder
-            photoHolder.appendChild(img);
-        });
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
+
