@@ -3,18 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Camera Capture</title>
+    <title>Camera PWA</title>
+    <style>
+        #videoElement {
+            width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+        #captureButton {
+            display: block;
+            margin: 0 auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #photoHolder {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <h1>Camera Capture</h1>
+    <h1>Camera PWA</h1>
     <video id="videoElement" autoplay></video>
     <button id="captureButton">Capture</button>
-    <canvas id="canvasElement" style="display: none;"></canvas>
     <div id="photoHolder"></div>
 
     <script>
+        // Check if the browser supports service workers
+        if ('serviceWorker' in navigator) {
+            // Register the service worker
+            navigator.serviceWorker.register('service-worker.js');
+        }
+
         const video = document.getElementById('videoElement');
-        const canvas = document.getElementById('canvasElement');
         const captureButton = document.getElementById('captureButton');
         const photoHolder = document.getElementById('photoHolder');
 
@@ -29,11 +50,13 @@
 
         // Capture the image
         captureButton.addEventListener('click', () => {
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
-            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-            
-            // Convert canvas to image data URL
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // Convert canvas to data URL
             const imageDataURL = canvas.toDataURL('image/png');
 
             // Create a new image element
@@ -42,40 +65,7 @@
 
             // Append the image to the photo holder
             photoHolder.appendChild(img);
-
-            // Save the image (optional)
-            saveImage(imageDataURL);
         });
-
-        // Function to save the image
-        function saveImage(imageDataURL) {
-            // Convert data URL to Blob
-            const blob = dataURLtoBlob(imageDataURL);
-
-            // Create a link element
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'photo.png';
-
-            // Trigger the click event on the link to download the image
-            link.click();
-        }
-
-        // Function to convert data URL to Blob
-        function dataURLtoBlob(dataURL) {
-            const parts = dataURL.split(';base64,');
-            const contentType = parts[0].split(':')[1];
-            const raw = window.atob(parts[1]);
-            const rawLength = raw.length;
-            const uInt8Array = new Uint8Array(rawLength);
-
-            for (let i = 0; i < rawLength; ++i) {
-                uInt8Array[i] = raw.charCodeAt(i);
-            }
-
-            return new Blob([uInt8Array], { type: contentType });
-        }
     </script>
 </body>
 </html>
-
