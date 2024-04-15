@@ -47,31 +47,25 @@
     overflow-y: auto;
     background-color: #ddd;
   }
-  body, html{
-      height: auto;
-      margin: 0;
-      padding: 0;
   .container {
     text-align: center;
     position: relative;
-    top: calc(70%);
+    top: 60%;
     left: 50%;
-    transform: translate(-50%, -40%);
-    margin-top: 20px;
+    transform: translate(-50%, -50%);
+    margin-top: 100px; /* 上側に20pxの余白を追加 */
   }
   h2 {
     font-size: 2rem;
     margin-bottom: 0.5rem;
     margin-top: 35px;
   }
-  h3 {
-      margin-top: 20px; /* h4タグの上側に20pxの余白を追加 */
-  }
-  p {
-    font-size: 1rem;
-  }
 
-  a {
+  h4 {
+  margin-top: 20px; /* h4タグの上側に20pxの余白を追加 */
+}
+
+  p {
     font-size: 1rem;
   }
 
@@ -80,15 +74,12 @@
       font-size: 2.5em;
       margin-top: 35px;
     }
-    h3 {
-      margin-top: 20px; /* h4タグの上側に20pxの余白を追加 */
+    h4 {
+        margin-top: 20px; /* h4タグの上側に20pxの余白を追加 */
     }
     p {
       font-size: 1.2em;
     }
-    a {
-    font-size: 1.2em;
-  }
   }
 
   @media screen and (max-width: 480px) {
@@ -96,29 +87,26 @@
       font-size: 1.5em;
       margin-top: 35px;
     }
-    h3 {
-      margin-top: 20px; /* h4タグの上側に20pxの余白を追加 */
-    }
+    h4 {
+        margin-top: 20px; /* h4タグの上側に20pxの余白を追加 */
+    }   
     p {
       font-size: 0.6em;
     }
-    a {
-    font-size: 0.6em;
-  }
   }
 </style>
 
 <div class="container">
   <h2>実績(資格類)</h2>
-  <p>・暗算検定3級</p>
-  <p>・球算検定4級</p>
-  <p>・実用英語技能検定3級</p>
-  <p>・実用数学技能検定準2級</p>
-  <p>・少年部　空手道初段</p>
+  <p>暗算検定3級</p>
+  <p>球算検定4級</p>
+  <p>実用英語技能検定3級</p>
+  <p>実用数学技能検定準2級</p>
+  <p>少年部　空手道初段</p>
   <h2>制作物</h2>
-  <h3>・スケジュール制作アプリ</h3>
+  <h4>スケジュール制作アプリ</h4>
   <p>過去の試験勉強などのデータをAIに学習させ、テスト週間のスケジュールAIが生成してくれる</p>
-  <h3>・個人ホームページ</h3>
+  <h4>個人ホームページ</h4>
   <p>1からCSSとJavascriptのコードを書き、制作した</p>
   <h3>・パスワード生成</h3>
   <p>pythonで制作した、ランダムでパスワードを生成してくれる、プログラムです</p>
