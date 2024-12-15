@@ -7,5 +7,5 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
 	site: 'https://ktaisei.github.io/official',
 	integrations: [mdx(), sitemap()],
-	base: '/official/',
+	base: '/official',
 });
