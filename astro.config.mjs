@@ -5,7 +5,6 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://KTaisei.github.io',
+	site: 'https://KTaisei.github.io/official',
 	integrations: [mdx(), sitemap()],
-	base: "/official",
 });
