@@ -1,7 +1,7 @@
 ---
 title: 'Stophone 開発記'
 description: 'Stophoneの技術書'
-pubDate: 'dec 08 2024'
+pubDate: 'dec 20 2024'
 heroImage: '/official/walking_phone.jpg'
 ---
 
