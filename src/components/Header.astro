@@ -36,11 +36,12 @@ import { SITE_TITLE } from '../consts';
 </header>
 <style>
 	header {
-		margin: 0;
-		padding: 0 1em;
-		background: white;
-		box-shadow: 0 2px 8px rgba(var(--black), 5%);
+    margin: 0;
+    padding: 0 1em;
+    background: white;
+    box-shadow: 0 2px 8px rgba(var(--black), 5%);
 	}
+
 	h2 {
 		margin: 0;
 		font-size: 1em;
@@ -50,28 +51,73 @@ import { SITE_TITLE } from '../consts';
 	h2 a.active {
 		text-decoration: none;
 	}
+
 	nav {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 	}
+
 	nav a {
 		padding: 1em 0.5em;
 		color: var(--black);
 		border-bottom: 4px solid transparent;
 		text-decoration: none;
 	}
+
 	nav a.active {
 		text-decoration: none;
 		border-bottom-color: var(--accent);
 	}
+
 	.social-links,
 	.social-links a {
 		display: flex;
 	}
+
+	/* スマホ（小型スクリーン）向けのスタイル */
 	@media (max-width: 720px) {
+		header {
+			padding: 0.5em; /* 上下左右の余白を小さく調整 */
+		}
+
+		h2 {
+			font-size: 0.9em; /* 見出しのサイズを縮小 */
+		}
+
+		nav {
+			justify-content: flex-start; /* リンクを左寄せ */
+			gap: 0.5em; /* 各リンク間にスペースを追加 */
+		}
+
+		nav a {
+			padding: 0.5em 0.5em; /* リンクの余白を小さく調整 */
+			font-size: 0.9em; /* リンク文字サイズを調整 */
+			border: none; /* スマホでは下線を非表示 */
+		}
+
 		.social-links {
-			display: none;
+			display: none; /* ソーシャルリンクを非表示 */
+		}
+	}
+
+	/* iPhone SEなどさらに小型（375px以下）のデバイス向け */
+	@media (max-width: 375px) {
+		h2 {
+			font-size: 0.8em; /* 見出しをさらに縮小 */
+		}
+
+		nav {
+			gap: 0.3em; /* リンク間のスペースをさらに縮小 */
+		}
+
+		nav a {
+			font-size: 0.8em; /* リンク文字サイズをさらに縮小 */
+			padding: 0.4em 0.3em; /* 余白をコンパクトに */
+		}
+
+		.social-links {
+			display: none; /* ソーシャルリンクを非表示 */
 		}
 	}
 </style>
