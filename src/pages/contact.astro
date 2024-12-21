@@ -1,0 +1,92 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+---
+<!doctype html>
+<html lang="en">
+    <head>
+        <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+        <style>
+            form {
+                max-width: 500px;
+                margin: 20px auto; /* headerと干渉しないようにトップマージンを設定 */
+                padding: 20px;
+                border: 1px solid #ddd;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                background-color: #fff;
+                font-family: Arial, sans-serif;
+            }
+
+            form label {
+                display: block;
+                margin-bottom: 8px;
+                font-weight: bold;
+                color: #333;
+            }
+
+            form input,
+            form textarea {
+                width: 95%;
+                padding: 10px;
+                margin-bottom: 20px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                font-size: 16px;
+            }
+
+            form input:focus,
+            form textarea:focus {
+                outline: none;
+                border-color: #007BFF;
+                box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            }
+
+            form button {
+                width: 100%;
+                padding: 10px;
+                background-color: #007BFF;
+                color: #fff;
+                font-size: 16px;
+                font-weight: bold;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+            form button:hover {
+                background-color: #0056b3;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Header コンポーネント -->
+        <Header />
+
+
+        <!-- メールフォーム -->
+        <main>
+            <h1>Contact Me</h1>
+            <p>無料でお問い合わせできます!</p>
+            <p>ただし、１ヶ月50件までしかメールは送信できないため、<br>受け取れない可能性もあります。</p>
+            <p>また、忙しい場合、メールの確認ができないこともありますので、<br>ご了承ください。</p>
+            <form action="https://formspree.io/f/mwppekzv" method="POST">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name" required />
+                <label for="email">Your Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required />
+
+                <label for="message">Your Message</label>
+                <textarea id="message" name="message" rows="5" placeholder="Write your message here" required></textarea>
+
+                <button type="submit">Send Message</button>
+            </form>
+        </main>
+
+        <!-- Footer コンポーネント -->
+        <Footer />
+    </body>
+</html>
