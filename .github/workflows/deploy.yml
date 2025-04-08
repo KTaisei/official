@@ -24,4 +24,4 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
-          server-dir: /ktaisei.xsrv.jp/public_html/official
+          server-dir: /ktaisei.xsrv.jp/public_html/official/
