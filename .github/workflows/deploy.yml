@@ -1,0 +1,27 @@
+name: "Deploy"
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - dist/**
+      - .github/**
+
+jobs:
+  deploy-to-xserver:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      ## FTP deployを使用したFTPアップロードの記述
+      - name: Upload files on Xserver
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/
+          server-dir: /ktaisei.xsrv.jp/public_html/
