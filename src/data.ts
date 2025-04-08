@@ -15,7 +15,7 @@ export const projects = [
     title: 'Eureka!',
     description: 'A site that posts explanatory articles about studying',
     technologies: ['Astro', 'Javascript', 'Typescript',"Now Developing"],
-    image: 'http://localhost:4321/blog/stophone_support.jpg',
+    image: 'http://ktaisei.xsrv.jp/blog/stophone_support.jpg',
     github: 'https://github.com/KTaisei/Eureka',
     demo: 'https://ktaisei.xsrv.jp/Eureka/'
   },
