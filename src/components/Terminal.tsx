@@ -29,14 +29,14 @@ const Terminal: React.FC<TerminalProps> = ({ setActiveSection }) => {
       "Available commands:\n  help - Show this help message\n  ls - List available pages\n  cd [page] - Navigate to a page\n  whoami - Display user information\n  cat profile.txt - Show detailed profile\n  clear - Clear the terminal\n  date - Show current date and time\n  exit - Exit terminal",
 
     ls: () =>
-      "Available pages:\n  home\n  about\n  projects\n  blog\n  contact",
+      "Available pages:\n  home\n  about\n  projects\n  contact",
 
     cd: () => {
       const args = currentCommand.split(" ").slice(1);
       if (args.length === 0) return "Usage: cd [page]";
 
       const page = args[0].toLowerCase();
-      const validPages = ["home", "about", "projects", "blog", "contact"];
+      const validPages = ["home", "about", "projects","contact"];
 
       if (!validPages.includes(page)) {
         return `cd: no such page: ${page}`;
