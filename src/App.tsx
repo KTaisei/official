@@ -5,22 +5,16 @@ import {
   Code,
   User,
   Briefcase,
-  BookOpen,
   Mail,
   Github,
   Linkedin,
   Twitter,
-  Moon,
-  Sun,
-  ChevronRight,
 } from "lucide-react";
 import Header from "./components/Header";
 import TerminalComponent from "./components/Terminal";
 import ProjectCard from "./components/ProjectCard";
-import BlogList from "./components/BlogList";
-import BlogPostPage from "./components/BlogPostPage";
 import ContactForm from "./components/ContactForm";
-import { blogPosts, projects } from "./data";
+import { projects } from "./data";
 
 function App() {
   const [activeSection, setActiveSection] = useState("home");
@@ -385,47 +379,6 @@ function App() {
             data-oid="mv-b4xs"
           />
 
-          <Route
-            path="/blog"
-            element={
-              <section className="py-16" data-oid="wh775xq">
-                <div className="max-w-4xl mx-auto" data-oid="t3f27e8">
-                  <div className="flex items-center mb-8" data-oid="vb25blf">
-                    <BookOpen
-                      className="mr-3 h-6 w-6 text-green-500"
-                      data-oid="p74exm4"
-                    />
-
-                    <h2
-                      className="text-3xl font-bold font-mono"
-                      data-oid="3lq_qzm"
-                    >
-                      Blog
-                    </h2>
-                  </div>
-
-                  <BlogList
-                    posts={blogPosts}
-                    theme={theme}
-                    data-oid="-ynd6g4"
-                  />
-                </div>
-              </section>
-            }
-            data-oid="7vghbi9"
-          />
-
-          <Route
-            path="/blog/:id"
-            element={
-              <BlogPostPage
-                posts={blogPosts}
-                theme={theme}
-                data-oid="bp:xl2_"
-              />
-            }
-            data-oid="afmy8k3"
-          />
 
           <Route
             path="/contact"

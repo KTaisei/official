@@ -1,14 +1,6 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
-import {
-  Terminal,
-  User,
-  Briefcase,
-  BookOpen,
-  Mail,
-  Moon,
-  Sun,
-} from "lucide-react";
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { Terminal, User, Briefcase, Mail, Moon, Sun, Newspaper } from 'lucide-react';
 
 interface HeaderProps {
   activeSection: string;
@@ -17,181 +9,128 @@ interface HeaderProps {
   toggleTheme: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({
-  activeSection,
-  setActiveSection,
-  theme,
-  toggleTheme,
-}) => {
+const Header: React.FC<HeaderProps> = ({ activeSection, setActiveSection, theme, toggleTheme }) => {
   const location = useLocation();
-
+  
   const navItems = [
-    {
-      id: "home",
-      label: "Home",
-      icon: <Terminal className="h-5 w-5" data-oid="_:-jjsj" />,
-      path: "/",
-    },
-    {
-      id: "about",
-      label: "About",
-      icon: <User className="h-5 w-5" data-oid="_re9q_8" />,
-      path: "/about",
-    },
-    {
-      id: "projects",
-      label: "Projects",
-      icon: <Briefcase className="h-5 w-5" data-oid="tdkvspu" />,
-      path: "/projects",
-    },
-    {
-      id: "blog",
-      label: "Blog",
-      icon: <BookOpen className="h-5 w-5" data-oid="ss1day." />,
-      path: "/blog",
-    },
-    {
-      id: "contact",
-      label: "Contact",
-      icon: <Mail className="h-5 w-5" data-oid="-991m6v" />,
-      path: "/contact",
-    },
+    { id: 'home', label: 'Home', icon: <Terminal className="h-5 w-5" />, path: '/' },
+    { id: 'about', label: 'About', icon: <User className="h-5 w-5" />, path: '/about' },
+    { id: 'projects', label: 'Projects', icon: <Briefcase className="h-5 w-5" />, path: '/projects' },
+    { id: 'blog', label: 'Blog', icon: <Newspaper className="h-5 w-5" />, path: 'https://github.com', external: true },
+    { id: 'contact', label: 'Contact', icon: <Mail className="h-5 w-5" />, path: '/contact' },
   ];
 
   return (
-    <header
-      className={`sticky top-0 z-50 ${theme === "dark" ? "bg-gray-800" : "bg-white"} shadow-md`}
-      data-oid=":lc67qs"
-    >
-      <div className="container mx-auto px-4" data-oid="ht119t-">
-        <div
-          className="flex justify-between items-center py-4"
-          data-oid="k8z9cxr"
-        >
-          <div className="flex items-center" data-oid=".2kgiqi">
-            <Link
-              to="/"
-              onClick={() => setActiveSection("home")}
-              className="flex items-center"
-              data-oid="sptbpdd"
-            >
-              <Terminal
-                className="h-8 w-8 text-blue-500 mr-2"
-                data-oid="g741ubk"
-              />
-
-              <span className="text-xl font-bold font-mono" data-oid="h-o0epj">
-                <span className="text-blue-500" data-oid="kj9qtn.">
-                  &gt;
-                </span>{" "}
-                Taisei.dev
+    <header className={`sticky top-0 z-50 ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'} shadow-md`}>
+      <div className="container mx-auto px-4">
+        <div className="flex justify-between items-center py-4">
+          <div className="flex items-center">
+            <Link to="/" onClick={() => setActiveSection('home')} className="flex items-center">
+              <Terminal className="h-8 w-8 text-blue-500 mr-2" />
+              <span className="text-xl font-bold font-mono">
+                <span className="text-blue-500">&gt;</span> Taisei.dev
               </span>
             </Link>
           </div>
-
-          <nav
-            className="hidden md:flex items-center space-x-1"
-            data-oid="vi-brjc"
-          >
+          
+          <nav className="hidden md:flex items-center space-x-1">
             {navItems.map((item) => (
-              <Link
-                key={item.id}
-                to={item.path}
-                onClick={() => setActiveSection(item.id)}
-                className={`px-4 py-2 rounded-md font-mono flex items-center transition-colors ${
-                  activeSection === item.id || location.pathname === item.path
-                    ? "bg-blue-500 text-white"
-                    : theme === "dark"
-                      ? "hover:bg-gray-700"
-                      : "hover:bg-gray-100"
-                }`}
-                data-oid="ib2amx-"
-              >
-                <span className="mr-2" data-oid="_5stwj3">
-                  {item.icon}
-                </span>
-                {item.label}
-              </Link>
+              item.external ? (
+                <a
+                  key={item.id}
+                  href={item.path}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`px-4 py-2 rounded-md font-mono flex items-center transition-colors ${
+                    theme === 'dark' ? 'hover:bg-gray-700' : 'hover:bg-gray-100'
+                  }`}
+                >
+                  <span className="mr-2">{item.icon}</span>
+                  {item.label}
+                </a>
+              ) : (
+                <Link
+                  key={item.id}
+                  to={item.path}
+                  onClick={() => setActiveSection(item.id)}
+                  className={`px-4 py-2 rounded-md font-mono flex items-center transition-colors ${
+                    activeSection === item.id || location.pathname === item.path
+                      ? 'bg-blue-500 text-white' 
+                      : theme === 'dark' ? 'hover:bg-gray-700' : 'hover:bg-gray-100'
+                  }`}
+                >
+                  <span className="mr-2">{item.icon}</span>
+                  {item.label}
+                </Link>
+              )
             ))}
           </nav>
-
-          <button
+          
+          <button 
             onClick={toggleTheme}
-            className={`p-2 rounded-full ${theme === "dark" ? "bg-gray-700" : "bg-gray-200"}`}
+            className={`p-2 rounded-full ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'}`}
             aria-label="Toggle theme"
-            data-oid="bi34nht"
           >
-            {theme === "dark" ? (
-              <Sun className="h-5 w-5" data-oid="tbt0mk_" />
-            ) : (
-              <Moon className="h-5 w-5" data-oid="u84n8jw" />
-            )}
+            {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
           </button>
-
+          
           {/* Mobile menu button */}
-          <div className="md:hidden" data-oid="z7ogbp_">
-            <button
-              className={`p-2 rounded-md ${theme === "dark" ? "bg-gray-700" : "bg-gray-200"}`}
+          <div className="md:hidden">
+            <button 
+              className={`p-2 rounded-md ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'}`}
               onClick={() => {
-                const mobileMenu = document.getElementById("mobile-menu");
+                const mobileMenu = document.getElementById('mobile-menu');
                 if (mobileMenu) {
-                  mobileMenu.classList.toggle("hidden");
+                  mobileMenu.classList.toggle('hidden');
                 }
               }}
-              data-oid="4w54ucf"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                data-oid="8vaotpl"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                  data-oid="jw:w3:t"
-                />
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
           </div>
         </div>
       </div>
-
+      
       {/* Mobile menu */}
-      <div id="mobile-menu" className="md:hidden hidden" data-oid="edmmlk4">
-        <div
-          className={`px-4 py-2 ${theme === "dark" ? "bg-gray-800" : "bg-white"}`}
-          data-oid="x5bz:xg"
-        >
+      <div id="mobile-menu" className="md:hidden hidden">
+        <div className={`px-4 py-2 ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
           {navItems.map((item) => (
-            <Link
-              key={item.id}
-              to={item.path}
-              onClick={() => {
-                setActiveSection(item.id);
-                const mobileMenu = document.getElementById("mobile-menu");
-                if (mobileMenu) {
-                  mobileMenu.classList.add("hidden");
-                }
-              }}
-              className={`w-full text-left px-4 py-2 my-1 rounded-md font-mono flex items-center ${
-                activeSection === item.id
-                  ? "bg-blue-500 text-white"
-                  : theme === "dark"
-                    ? "hover:bg-gray-700"
-                    : "hover:bg-gray-100"
-              }`}
-              data-oid="obqanid"
-            >
-              <span className="mr-2" data-oid="tn5uc7o">
-                {item.icon}
-              </span>
-              {item.label}
-            </Link>
+            item.external ? (
+              <a
+                key={item.id}
+                href={item.path}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`w-full text-left px-4 py-2 my-1 rounded-md font-mono flex items-center ${
+                  theme === 'dark' ? 'hover:bg-gray-700' : 'hover:bg-gray-100'
+                }`}
+              >
+                <span className="mr-2">{item.icon}</span>
+                {item.label}
+              </a>
+            ) : (
+              <Link
+                key={item.id}
+                to={item.path}
+                onClick={() => {
+                  setActiveSection(item.id);
+                  const mobileMenu = document.getElementById('mobile-menu');
+                  if (mobileMenu) {
+                    mobileMenu.classList.add('hidden');
+                  }
+                }}
+                className={`w-full text-left px-4 py-2 my-1 rounded-md font-mono flex items-center ${
+                  activeSection === item.id 
+                    ? 'bg-blue-500 text-white' 
+                    : theme === 'dark' ? 'hover:bg-gray-700' : 'hover:bg-gray-100'
+                }`}
+              >
+                <span className="mr-2">{item.icon}</span>
+                {item.label}
+              </Link>
+            )
           ))}
         </div>
       </div>
