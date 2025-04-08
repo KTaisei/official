@@ -3,29 +3,29 @@
 export const projects = [
   {
     id: 1,
-    title: 'AI Code Assistant',
-    description: 'A machine learning powered code completion tool that helps developers write code faster.',
-    technologies: ['Python', 'TensorFlow', 'React'],
-    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-    github: 'https://github.com',
-    demo: 'https://demo.com'
+    title: 'Stophone',
+    description: 'This application was created to prevent people from using their smartphones while walking.',
+    technologies: ['Flutter', 'Dart'],
+    image: 'https://ktaisei.xsrv.jp/blog/walking_phone.jpg',
+    github: 'https://github.com/KTaisei/stophone',
+    demo: 'https://ktaisei.github.io/stophone_tsx/'
   },
   {
     id: 2,
-    title: 'Blockchain Explorer',
-    description: 'A web application that allows users to explore and analyze blockchain transactions.',
-    technologies: ['TypeScript', 'Node.js', 'Web3.js'],
-    image: 'https://images.unsplash.com/photo-1639762681057-408e52192e55?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-    github: 'https://github.com',
-    demo: 'https://demo.com'
+    title: 'Eureka!',
+    description: 'A site that posts explanatory articles about studying',
+    technologies: ['Astro', 'Javascript', 'Typescript',"Now Developing"],
+    image: 'http://localhost:4321/blog/stophone_support.jpg',
+    github: 'https://github.com/KTaisei/Eureka',
+    demo: 'https://ktaisei.xsrv.jp/Eureka/'
   },
   {
     id: 3,
-    title: 'Smart Home Dashboard',
-    description: 'An IoT dashboard for controlling and monitoring smart home devices.',
-    technologies: ['React', 'GraphQL', 'MQTT'],
-    image: 'https://images.unsplash.com/photo-1558002038-1055e2dae2d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-    github: 'https://github.com',
-    demo: 'https://demo.com'
+    title: 'Math_Battle',
+    description: "This program allows you to have a calculation battle with your computer's CPU.",
+    technologies: ["Python", "HTML"],
+    image: 'http://ktaisei.xsrv.jp/blog/Designer.jpg',
+    github: 'https://github.com/KTaisei/math_Battle',
+    demo: 'https://github.com/KTaisei/math_Battle'
   }
 ];

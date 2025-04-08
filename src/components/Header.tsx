@@ -16,7 +16,7 @@ const Header: React.FC<HeaderProps> = ({ activeSection, setActiveSection, theme,
     { id: 'home', label: 'Home', icon: <Terminal className="h-5 w-5" />, path: '/' },
     { id: 'about', label: 'About', icon: <User className="h-5 w-5" />, path: '/about' },
     { id: 'projects', label: 'Projects', icon: <Briefcase className="h-5 w-5" />, path: '/projects' },
-    { id: 'blog', label: 'Blog', icon: <Newspaper className="h-5 w-5" />, path: 'https://github.com', external: true },
+    { id: 'blog', label: 'Blog', icon: <Newspaper className="h-5 w-5" />, path: 'https://ktaisei.xsrv.jp/blog', external: true },
     { id: 'contact', label: 'Contact', icon: <Mail className="h-5 w-5" />, path: '/contact' },
   ];
 

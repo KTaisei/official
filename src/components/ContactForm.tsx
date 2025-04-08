@@ -53,7 +53,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ theme }) => {
           className="mb-4 p-3 bg-green-100 text-green-800 rounded-md"
           data-oid="p_ofa1a"
         >
-          Your message has been sent successfully!
+          Sorry... This Form is not working right now. Please contact me twitter.
         </div>
       )}
 
@@ -62,7 +62,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ theme }) => {
           className="mb-4 p-3 bg-red-100 text-red-800 rounded-md"
           data-oid="igadqe."
         >
-          There was an error sending your message. Please try again.
+          Sorry... This Form is not working right now. Please contact me twitter.
         </div>
       )}
 
