@@ -26,4 +26,9 @@ export default defineConfig({
       },
     },
   },
+  server: {
+    historyApiFallback: {
+      index: '/official/index.html'
+    }
+  }
 });
