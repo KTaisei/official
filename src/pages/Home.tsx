@@ -22,7 +22,7 @@ const Home: React.FC<HomeProps> = ({ typing, cursorVisible, setActiveSection }) 
           <span className={`inline-block w-3 h-8 ml-1 bg-blue-500 ${cursorVisible ? 'opacity-100' : 'opacity-0'}`}></span>
         </h1>
         <p className="text-xl md:text-2xl mb-8 font-mono opacity-80">
-            I'm a front end Engineer.
+            I'm a front-end Engineer.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
           <button 
