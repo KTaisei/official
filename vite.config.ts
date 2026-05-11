@@ -4,7 +4,7 @@ import mdx from '@mdx-js/rollup';
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
 
 export default defineConfig({
-  base: '/ofifcal/',  // ← "official" から "ofifcal" に修正（リポジトリ名と合わせる）
+  base: '/official/',  // ← "official" から "ofifcal" に修正（リポジトリ名と合わせる）
   plugins: [
     mdx(),
     react(),
