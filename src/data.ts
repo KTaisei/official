@@ -12,15 +12,6 @@ export const projects = [
   },
   {
     id: 2,
-    title: 'Eureka!',
-    description: 'A site that posts explanatory articles about studying',
-    technologies: ['Astro', 'Javascript', 'Typescript',"Now Developing"],
-    image: 'http://ktaisei.xsrv.jp/blog/stophone_support.jpg',
-    github: 'https://github.com/KTaisei/Eureka',
-    demo: 'https://ktaisei.xsrv.jp/Eureka/'
-  },
-  {
-    id: 3,
     title: 'Math_Battle',
     description: "This program allows you to have a calculation battle with your computer's CPU.",
     technologies: ["Python", "HTML"],
