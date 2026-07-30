@@ -64,11 +64,9 @@ const About: React.FC<AboutProps> = ({ theme }) => {
               <p className="text-green-500 font-mono">2007/07/03</p>
               <p className="mt-2 font-mono">My life is started.</p>
             </div>
-          </div>
-          <div className="space-y-6">
             <div className="border-l-4 border-green-500 pl-4">
               <h4 className="text-xl font-bold font-mono">SecHack365</h4>
-              <p className="text-green-500 font-mono">2026/06 ~ </p>
+              <p className="text-green-500 font-mono">2026/06 ~</p>
               <p className="mt-2 font-mono">SecHack365 学習駆動コース トレーニー</p>
             </div>
           </div>
