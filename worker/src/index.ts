@@ -14,8 +14,10 @@ export default { async fetch(request: Request, env: Env): Promise<Response> {
   if (url.pathname === '/callback' || (url.pathname === '/' && url.searchParams.has('code'))) {
     const code = url.searchParams.get('code'); if (!code) return new Response('Missing OAuth code', {status:400});
     const form = new URLSearchParams({client_id:env.GITHUB_CLIENT_ID, client_secret:env.GITHUB_CLIENT_SECRET, code});
-    const tokenRes = await fetch('https://github.com/login/oauth/access_token', {method:'POST', headers:{accept:'application/json','content-type':'application/x-www-form-urlencoded'}, body:form.toString()});
-    const tokenPayload = await tokenRes.json() as {access_token?:string; error?:string};
+    const tokenRes = await fetch('https://github.com/login/oauth/access_token', {method:'POST', headers:{'Accept':'application/json','Content-Type':'application/x-www-form-urlencoded','User-Agent':'portfolio-decap-oauth'}, body:form.toString()});
+    const tokenText = await tokenRes.text();
+    if (!tokenRes.ok) return json({error: 'OAuth token exchange failed', detail: tokenText.slice(0, 240)}, {status: tokenRes.status});
+    const tokenPayload = JSON.parse(tokenText) as {access_token?:string; error?:string};
     const { access_token } = tokenPayload; if (!access_token) return json({error: 'OAuth failed', detail: tokenPayload.error ?? 'No access token returned'}, {status:401});
     const user = await fetch('https://api.github.com/user',{headers:{authorization:`Bearer ${access_token}`}}).then(async r => await r.json() as {login:string});
     if (user.login !== env.ALLOWED_GITHUB_LOGIN) return new Response('Not authorized',{status:403});
