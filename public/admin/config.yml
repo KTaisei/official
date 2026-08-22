@@ -1,0 +1,66 @@
+backend:
+  name: github
+  repo: YOUR_GITHUB_USERNAME/YOUR_REPOSITORY
+  branch: main
+  base_url: https://YOUR-WORKER.workers.dev
+  auth_endpoint: auth
+media_folder: public/uploads
+public_folder: /uploads
+collections:
+  - name: site
+    label: Site content
+    files:
+      - name: profile
+        label: Profile
+        file: content/profile.json
+        fields:
+          - {label: Name, name: name, widget: string}
+          - {label: Biography, name: biography, widget: text}
+      - name: projects
+        label: Projects
+        file: content/projects.json
+        fields:
+          - label: Projects
+            name: projects
+            widget: list
+            fields:
+              - {label: URL slug, name: slug, widget: string, hint: "英小文字とハイフン（例: campus-connect）"}
+              - {label: Title, name: title, widget: string}
+              - {label: Description, name: description, widget: text}
+              - {label: Image, name: image, widget: image, required: false}
+              - {label: Link, name: link, widget: string, required: false}
+              - {label: Technologies, name: tags, widget: list}
+              - {label: Technical article title, name: articleTitle, widget: string}
+              - {label: Technical article body, name: articleBody, widget: markdown}
+      - name: settings
+        label: Section visibility
+        file: content/settings.json
+        fields:
+          - {label: Show statistics, name: showStats, widget: boolean, default: true}
+          - {label: Show news, name: showNews, widget: boolean, default: true}
+      - name: site
+        label: Home, About, Contact & Footer
+        file: content/site.json
+        fields:
+          - {label: Brand name, name: brand, widget: string}
+          - {label: Hero text, name: hello, widget: string}
+          - {label: About heading, name: aboutHeading, widget: text}
+          - {label: Contact heading, name: contactHeading, widget: text}
+          - {label: Contact email, name: email, widget: string}
+          - {label: Copyright, name: footerCopyright, widget: string}
+          - label: Social links
+            name: socials
+            widget: list
+            fields:
+              - {label: Label, name: label, widget: string}
+              - {label: URL, name: url, widget: string}
+      - name: slides
+        label: Hero slideshow
+        file: content/slides.json
+        fields:
+          - label: Slides
+            name: slides
+            widget: list
+            fields:
+              - {label: Image, name: image, widget: image}
+              - {label: Alternative text, name: alt, widget: string}

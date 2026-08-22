@@ -1,0 +1,1 @@
+{"projects":[{"slug":"campus-connect","title":"Campus Connect","description":"学生と地域をつなぐプラットフォーム。","tags":["Next.js","TypeScript"],"articleTitle":"静的サイトでも育つコミュニティ設計","articleBody":"情報が増えても迷わないよう、コンテンツの階層と導線を先に設計しました。Next.jsの静的生成を活用し、更新性と表示速度の両立を目指しています。"}]}
