@@ -45,7 +45,16 @@ collections:
           - {label: Brand name, name: brand, widget: string}
           - {label: Hero text, name: hello, widget: string}
           - {label: About heading, name: aboutHeading, widget: text}
+          - {label: About page title, name: aboutPageTitle, widget: string}
+          - label: Career history
+            name: careers
+            widget: list
+            fields:
+              - {label: Period, name: period, widget: string}
+              - {label: Description, name: description, widget: text}
           - {label: Contact heading, name: contactHeading, widget: text}
+          - {label: Contact page title, name: contactPageTitle, widget: string}
+          - {label: Contact page description, name: contactDescription, widget: text}
           - {label: Contact email, name: email, widget: string}
           - {label: Copyright, name: footerCopyright, widget: string}
           - label: Social links
