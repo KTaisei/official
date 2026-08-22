@@ -19,7 +19,10 @@ export default { async fetch(request: Request, env: Env): Promise<Response> {
     if (!tokenRes.ok) return json({error: 'OAuth token exchange failed', detail: tokenText.slice(0, 240)}, {status: tokenRes.status});
     const tokenPayload = JSON.parse(tokenText) as {access_token?:string; error?:string};
     const { access_token } = tokenPayload; if (!access_token) return json({error: 'OAuth failed', detail: tokenPayload.error ?? 'No access token returned'}, {status:401});
-    const user = await fetch('https://api.github.com/user',{headers:{authorization:`Bearer ${access_token}`}}).then(async r => await r.json() as {login:string});
+    const userRes = await fetch('https://api.github.com/user', {headers:{authorization:`Bearer ${access_token}`, accept:'application/vnd.github+json', 'user-agent':'portfolio-decap-oauth'}});
+    const userText = await userRes.text();
+    if (!userRes.ok) return json({error: 'GitHub user verification failed', detail: userText.slice(0, 240)}, {status: userRes.status});
+    const user = JSON.parse(userText) as {login:string};
     if (user.login !== env.ALLOWED_GITHUB_LOGIN) return new Response('Not authorized',{status:403});
     return new Response(`<script>window.opener.postMessage('authorization:github:success:${access_token}','*');window.close()</script>`,{headers:{'content-type':'text/html'}});
   }
