@@ -1,8 +1,8 @@
 backend:
   name: github
-  repo: YOUR_GITHUB_USERNAME/YOUR_REPOSITORY
+  repo: KTaisei/official
   branch: main
-  base_url: https://YOUR-WORKER.workers.dev
+  base_url: https://portfolio-decap-oauth.mathlike-science.workers.dev
   auth_endpoint: auth
 media_folder: public/uploads
 public_folder: /uploads
