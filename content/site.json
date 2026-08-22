@@ -1,22 +1,19 @@
-<<<<<<< HEAD
 {
   "brand": "TAISEI KAWAKAMI / PORTFOLIO",
   "hello": "Hello",
   "aboutHeading": "好きこそものの上手なれ",
+  "aboutPageTitle": "Profile & Career",
+  "careers": [
+    { "period": "2018 — Present", "description": "デジタルプロダクトの企画、デザイン、フロントエンド実装に携わる。" },
+    { "period": "2016 — 2018", "description": "Web制作とブランドコミュニケーションの基礎を学ぶ。" }
+  ],
   "contactHeading": "Please contact me",
+  "contactPageTitle": "Let's make the next view.",
+  "contactDescription": "ご相談や協業のご連絡は、メールからお気軽にお送りください。",
   "email": "mathlike.science[at]gmail.com",
   "footerCopyright": "© 2026 TAISEI KAWAKAMI. ALL RIGHTS RESERVED.",
   "socials": [
-    {
-      "label": "Blog",
-      "url": "https://ktaisei.github.io/blog/"
-    },
-    {
-      "label": "GitHub",
-      "url": "https://github.com/ktaisei"
-    }
+    { "label": "Blog", "url": "https://ktaisei.github.io/blog/" },
+    { "label": "GitHub", "url": "https://github.com/ktaisei" }
   ]
 }
-=======
-{"brand":"TAISEI KAWAKAMI / PORTFOLIO","hello":"Hello","aboutHeading":"人と情報のあいだに、心地よい「流れ」をデザインする。","aboutPageTitle":"Profile & Career","careers":[{"period":"2018 — Present","description":"デジタルプロダクトの企画、デザイン、フロントエンド実装に携わる。"},{"period":"2016 — 2018","description":"Web制作とブランドコミュニケーションの基礎を学ぶ。"}],"contactPageTitle":"Let's make the next view.","contactDescription":"ご相談や協業のご連絡は、メールからお気軽にお送りください。","contactHeading":"一緒に、次の風景をつくりませんか。","email":"hello@example.com","footerCopyright":"© 2026 TAISEI KAWAKAMI. ALL RIGHTS RESERVED.","socials":[{"label":"Blog","url":"https://ktaisei.github.io/blog/"},{"label":"GitHub","url":"https://github.com/ktaisei"}]}
->>>>>>> b5b6e5f (feat: update About and Contact pages with dynamic content from site.json)
