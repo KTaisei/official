@@ -1,19 +1,35 @@
 {
-  "brand": "TAISEI KAWAKAMI / PORTFOLIO",
-  "hello": "Hello",
-  "aboutHeading": "好きこそものの上手なれ",
-  "aboutPageTitle": "Profile & Career",
-  "careers": [
-    { "period": "2018 — Present", "description": "デジタルプロダクトの企画、デザイン、フロントエンド実装に携わる。" },
-    { "period": "2016 — 2018", "description": "Web制作とブランドコミュニケーションの基礎を学ぶ。" }
-  ],
   "contactHeading": "Please contact me",
-  "contactPageTitle": "Let's make the next view.",
-  "contactDescription": "ご相談や協業のご連絡は、メールからお気軽にお送りください。",
-  "email": "mathlike.science[at]gmail.com",
-  "footerCopyright": "© 2026 TAISEI KAWAKAMI. ALL RIGHTS RESERVED.",
   "socials": [
-    { "label": "Blog", "url": "https://ktaisei.github.io/blog/" },
-    { "label": "GitHub", "url": "https://github.com/ktaisei" }
-  ]
+    {
+      "label": "Blog",
+      "url": "https://ktaisei.github.io/blog/"
+    },
+    {
+      "label": "GitHub",
+      "url": "https://github.com/ktaisei"
+    }
+  ],
+  "brand": "TAISEI KAWAKAMI / PORTFOLIO",
+  "contactPageTitle": "Let's make the next view.",
+  "footerCopyright": "© 2026 TAISEI KAWAKAMI. ALL RIGHTS RESERVED.",
+  "hello": "Hello",
+  "careers": [
+    {
+      "period": "2026 - PRESENT",
+      "description": "SecHack365 学習駆動コース 大神ゼミ トレーニー"
+    },
+    {
+      "period": "2026-PRESENT",
+      "description": "大学"
+    },
+    {
+      "period": "2007",
+      "description": "Dawn"
+    }
+  ],
+  "aboutHeading": "好きこそものの上手なれ",
+  "email": "mathlike.science[at]gmail.com",
+  "contactDescription": "ご相談や協業のご連絡は、メールからお気軽にお送りください。",
+  "aboutPageTitle": "Profile & Career"
 }
