@@ -24,7 +24,16 @@ export default { async fetch(request: Request, env: Env): Promise<Response> {
     if (!userRes.ok) return json({error: 'GitHub user verification failed', detail: userText.slice(0, 240)}, {status: userRes.status});
     const user = JSON.parse(userText) as {login:string};
     if (user.login !== env.ALLOWED_GITHUB_LOGIN) return new Response('Not authorized',{status:403});
-    return new Response(`<script>window.opener.postMessage('authorization:github:success:${access_token}','*');window.close()</script>`,{headers:{'content-type':'text/html'}});
+    const payload = JSON.stringify({ token: access_token, provider: 'github' });
+    return new Response(`<!doctype html><title>Signing in…</title><script>
+      const receiveMessage = (event) => {
+        window.opener.postMessage('authorization:github:success:${payload}', event.origin);
+        window.removeEventListener('message', receiveMessage, false);
+        window.close();
+      };
+      window.addEventListener('message', receiveMessage, false);
+      window.opener.postMessage('authorizing:github', '*');
+    </script>`,{headers:{'content-type':'text/html'}});
   }
   if (url.pathname === '/favicon.ico') return new Response(null, {status: 204});
   return json({error:'Not found'},{status:404});
