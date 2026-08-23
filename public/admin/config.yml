@@ -24,7 +24,7 @@ collections:
             name: projects
             widget: list
             fields:
-              - {label: URL slug, name: slug, widget: string, hint: "英小文字とハイフン（例: campus-connect）"}
+              - {label: URL slug, name: slug, widget: string, hint: "英小文字・数字・ハイフンのみ（例: static-site-admin-cms-guide）", pattern: ["^[a-z0-9]+(?:-[a-z0-9]+)*$", "英小文字・数字・ハイフンのみで入力してください"]}
               - {label: Title, name: title, widget: string}
               - {label: Description, name: description, widget: text}
               - {label: Image, name: image, widget: image, required: false}
