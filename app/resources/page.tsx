@@ -1,0 +1,8 @@
+import presentations from '../../content/presentations.json';
+import blog from '../../content/blog.json';
+import qiita from '../../content/qiita.json';
+import zenn from '../../content/zenn.json';
+const base='/official';
+const qiitaPosts = qiita.posts as Array<{title:string;date:string;url:string}>;
+const zennPosts = zenn.posts as Array<{title:string;date:string;url:string}>;
+export default function Resources(){return <main className="inner-page"><a className="brand" href={base+'/' }><span>T</span> Taisei / PORTFOLIO</a><p className="section-kicker">RESOURCES</p><h1>Talks & Writings</h1><section className="resource-section"><h2>登壇資料</h2>{presentations.presentations.map(item=><a className="resource-card" href={item.url} target="_blank" key={item.url}><span>{item.event}</span><strong>{item.title}</strong><p>{item.description}</p><b>↗</b></a>)}</section><section className="resource-section"><h2>Personal blog</h2>{blog.posts.map(item=><a className="resource-card" href={item.url} target="_blank" key={item.url}><span>{item.date}</span><strong>{item.title}</strong><b>↗</b></a>)}</section><section className="resource-section"><h2>Qiita</h2>{qiitaPosts.length ? qiitaPosts.map(item=><a className="resource-card" href={item.url} target="_blank" key={item.url}><span>{item.date}</span><strong>{item.title}</strong><b>↗</b></a>) : <p className="lead">Qiitaの記事は公開後に自動で表示されます。</p>}</section><section className="resource-section"><h2>Zenn</h2>{zennPosts.length ? zennPosts.map(item=><a className="resource-card" href={item.url} target="_blank" key={item.url}><span>{item.date}</span><strong>{item.title}</strong><b>↗</b></a>) : <p className="lead">Zennの記事は公開後に自動で表示されます。</p>}</section><a className="text-link" href={base+'/'}>← トップへ戻る</a></main>}

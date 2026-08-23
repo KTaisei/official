@@ -73,3 +73,15 @@ collections:
             fields:
               - {label: Image, name: image, widget: image}
               - {label: Alternative text, name: alt, widget: string}
+      - name: presentations
+        label: Presentations
+        file: content/presentations.json
+        fields:
+          - label: Presentations
+            name: presentations
+            widget: list
+            fields:
+              - {label: Title, name: title, widget: string}
+              - {label: Event and date, name: event, widget: string}
+              - {label: URL, name: url, widget: string}
+              - {label: Description, name: description, widget: text}
