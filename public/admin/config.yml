@@ -5,7 +5,7 @@ backend:
   base_url: https://portfolio-decap-oauth.mathlike-science.workers.dev
   auth_endpoint: auth
 media_folder: public/uploads
-public_folder: /uploads
+public_folder: /official/uploads
 collections:
   - name: site
     label: Site content
