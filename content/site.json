@@ -16,19 +16,19 @@
   "hello": "Hello",
   "careers": [
     {
-      "period": "2026 - PRESENT",
-      "description": "SecHack365 学習駆動コース 大神ゼミ トレーニー"
-    },
-    {
       "period": "2026-PRESENT",
       "description": "大学"
+    },
+    {
+      "period": "2026 - PRESENT",
+      "description": "SecHack365 学習駆動コース 大神ゼミ トレーニー"
     },
     {
       "period": "2007",
       "description": "Dawn"
     }
   ],
-  "aboutHeading": "好きこそものの上手なれ",
+  "aboutHeading": "不易流行",
   "email": "mathlike.science[at]gmail.com",
   "contactDescription": "ご相談や協業のご連絡は、メールからお気軽にお送りください。\nメールを送る際には、[at]を@に変更してください。",
   "aboutPageTitle": "Profile & Career"
