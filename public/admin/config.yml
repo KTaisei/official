@@ -31,7 +31,11 @@ collections:
               - {label: Link, name: link, widget: string, required: false}
               - {label: Technologies, name: tags, widget: list}
               - {label: Technical article title, name: articleTitle, widget: string}
-              - {label: Technical article body, name: articleBody, widget: markdown}
+              - label: Technical article body
+                name: articleBody
+                widget: markdown
+                modes: [raw]
+                hint: "Markdownをそのまま入力します。Mermaidや表では、コードフェンス・表の各行を改行して入力してください。"
       - name: settings
         label: Section visibility
         file: content/settings.json
