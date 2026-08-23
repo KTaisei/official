@@ -25,7 +25,7 @@ export default function MermaidContent({ content }: { content: string }) {
       if (!cancelled) setSvg(result.svg);
     }).catch(() => { if (!cancelled) setSvg('<p>図を表示できませんでした。</p>'); });
     return () => { cancelled = true; };
-  }, [content, id, match]);
+  }, [content, id]);
 
   const markdown = (value: string) => <ReactMarkdown remarkPlugins={[remarkGfm]}>{value}</ReactMarkdown>;
   return <>{before && markdown(before)}{match && <div className="mermaid-diagram" dangerouslySetInnerHTML={{ __html: svg }} />}{after && markdown(after)}</>;

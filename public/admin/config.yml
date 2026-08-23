@@ -34,8 +34,9 @@ collections:
               - label: Technical article body
                 name: articleBody
                 widget: markdown
-                modes: [raw]
-                hint: "Markdownをそのまま入力します。Mermaidや表では、コードフェンス・表の各行を改行して入力してください。"
+                modes: [raw, rich_text]
+                buttons: [bold, italic, link, heading-one, heading-two, heading-three, quote, bulleted-list, numbered-list, code]
+                hint: "Markdown貼り付けとツールバー編集の両方に対応します。Mermaid・表・コードブロックはRawモードで入力してください。"
       - name: settings
         label: Section visibility
         file: content/settings.json
