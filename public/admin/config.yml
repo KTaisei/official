@@ -83,5 +83,16 @@ collections:
             fields:
               - {label: Title, name: title, widget: string}
               - {label: Event and date, name: event, widget: string}
+              - {label: Uploaded PDF or document, name: file, widget: file, required: false}
               - {label: URL, name: url, widget: string}
               - {label: Description, name: description, widget: text}
+      - name: resources
+        label: Resources page
+        file: content/resources.json
+        fields:
+          - {label: Page title, name: pageTitle, widget: string}
+          - {label: Presentations heading, name: presentationsHeading, widget: string}
+          - {label: Presentations description, name: presentationsDescription, widget: text}
+          - {label: Blog heading, name: blogHeading, widget: string}
+          - {label: Qiita heading, name: qiitaHeading, widget: string}
+          - {label: Zenn heading, name: zennHeading, widget: string}
