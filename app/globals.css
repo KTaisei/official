@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800&family=Outfit:wght@400;500;600;700&display=swap');
+.update-source{display:block;margin-bottom:5px;font:600 10px Outfit;letter-spacing:.13em;color:#527b9e}.article-age-notice{margin:26px 0;padding:16px 18px;border-left:4px solid #bb7a21;background:#fff4df;color:#65420a;font-size:14px;line-height:1.75}
 .lead,.intro h2,.contact h2,.inner-page h1{white-space:pre-line}
 .mermaid-diagram{overflow:auto;margin:28px 0;padding:20px;background:#fff;border:1px solid var(--line)}.mermaid-diagram svg{max-width:100%;height:auto}
 .tech-article table{width:100%;margin:24px 0;border-collapse:collapse;font-size:14px}.tech-article th,.tech-article td{padding:11px 13px;border:1px solid var(--line);text-align:left}.tech-article th{background:#eaf1f4;color:var(--navy)}.tech-article code{padding:2px 5px;background:#eaf1f4;font:12px monospace}.tech-article pre{overflow:auto;padding:16px;background:#071d42;color:#fff}

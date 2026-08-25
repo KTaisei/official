@@ -4,6 +4,7 @@
       "slug": "static-site-admin-cms-guide",
       "title": "静的サイトに管理画面を実装する",
       "description": "GitHub Pages・Decap CMS・Cloudflare Workersによる個人サイト運用",
+      "updatedAt": "2026-08-23",
       "tags": [
         "Next.js",
         "TypeScript",

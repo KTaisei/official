@@ -30,6 +30,7 @@ collections:
               - {label: Image, name: image, widget: image, required: false}
               - {label: Link, name: link, widget: string, required: false}
               - {label: Technologies, name: tags, widget: list}
+              - {label: Last updated, name: updatedAt, widget: date, required: false, hint: "1年以上前の記事では、公開ページに更新からの経過年数を表示します。"}
               - {label: Technical article title, name: articleTitle, widget: string}
               - label: Technical article body
                 name: articleBody
@@ -88,6 +89,7 @@ collections:
             fields:
               - {label: Title, name: title, widget: string}
               - {label: Event and date, name: event, widget: string}
+              - {label: Publication date, name: date, widget: date, required: false, hint: "ホームの更新情報への掲載・並び順に使用します。"}
               - {label: Uploaded PDF or document, name: file, widget: file, required: false}
               - {label: URL, name: url, widget: string}
               - {label: Description, name: description, widget: text}
