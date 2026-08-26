@@ -28,7 +28,14 @@ collections:
               - {label: Title, name: title, widget: string}
               - {label: Description, name: description, widget: text}
               - {label: Image, name: image, widget: image, required: false}
-              - {label: Link, name: link, widget: string, required: false}
+              - label: Related links
+                name: relatedLinks
+                widget: list
+                required: false
+                hint: "GitHub、公開サイト、デモ、資料などを複数登録できます。"
+                fields:
+                  - {label: Link label, name: label, widget: string, required: false}
+                  - {label: URL, name: url, widget: string}
               - {label: Technologies, name: tags, widget: list}
               - {label: Last updated, name: updatedAt, widget: date, required: false, hint: "1年以上前の記事では、公開ページに更新からの経過年数を表示します。"}
               - {label: Technical article title, name: articleTitle, widget: string}
