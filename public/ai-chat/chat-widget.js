@@ -190,8 +190,7 @@ async function sendMessage() {
   const replyElement = addMessage('assistant', '');
   await loadBlogSources();
   const messages = [
-    { role: 'system', content: SYSTEM_PROMPT },
-    { role: 'system', content: blogContextFor(text).context },
+    { role: 'system', content: [SYSTEM_PROMPT, blogContextFor(text).context].filter(Boolean).join('\n\n') },
     ...history.slice(-MAX_HISTORY_MESSAGES),
     { role: 'user', content: text },
   ];
