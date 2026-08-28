@@ -23,6 +23,13 @@ function supportsGuideAnimation() {
     && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
+function guideMotionFor(url) {
+  const path = new URL(url, window.location.href).pathname;
+  if (path.includes('/about/') || path.includes('/works/')) return 'climb';
+  if (path.includes('/resources/') || path.includes('/contact/')) return 'ladder';
+  return 'walk';
+}
+
 function guideToPage(url, title) {
   if (guidedNavigationStarted) return;
   guidedNavigationStarted = true;
@@ -32,7 +39,8 @@ function guideToPage(url, title) {
   }
   document.querySelector('.ai-guide-character')?.remove();
   const guide = document.createElement('div');
-  guide.className = 'ai-guide-character';
+  const motion = guideMotionFor(url);
+  guide.className = `ai-guide-character ai-guide-character--${motion}`;
   guide.setAttribute('aria-hidden', 'true');
   const speech = document.createElement('span');
   speech.className = 'ai-guide-speech';
@@ -40,10 +48,17 @@ function guideToPage(url, title) {
   const image = document.createElement('img');
   image.src = new URL('./images/taisei-guide.png', import.meta.url).href;
   image.alt = '';
-  guide.append(speech, image);
+  const stage = document.createElement('span');
+  stage.className = 'ai-guide-stage';
+  const wall = document.createElement('span');
+  wall.className = 'ai-guide-wall';
+  const ladder = document.createElement('span');
+  ladder.className = 'ai-guide-ladder';
+  stage.append(wall, ladder, image);
+  guide.append(speech, stage);
   document.body.append(guide);
-  window.requestAnimationFrame(() => guide.classList.add('ai-guide-character--walking'));
-  window.setTimeout(() => { window.location.assign(url); }, 2150);
+  window.requestAnimationFrame(() => guide.classList.add('ai-guide-character--moving'));
+  window.setTimeout(() => { window.location.assign(url); }, motion === 'walk' ? 2150 : 2550);
 }
 
 function injectStylesheet() {
