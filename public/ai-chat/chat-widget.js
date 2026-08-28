@@ -1,4 +1,4 @@
-import { SYSTEM_PROMPT } from './persona.js';
+import { BLOG_HOME_URL, SYSTEM_PROMPT } from './persona.js';
 
 const MODELS = [
   'Llama-3.2-3B-Instruct-q4f16_1-MLC',
@@ -11,6 +11,8 @@ let engine = null;
 let engineState = 'idle';
 let history = [];
 let elements;
+let blogSources = [];
+let blogSourcesPromise = null;
 
 function injectStylesheet() {
   if (document.querySelector('link[data-ai-chat-styles]')) return;
@@ -41,6 +43,85 @@ function setInputEnabled(enabled) {
   elements.input.disabled = !enabled;
   elements.send.disabled = !enabled;
   if (enabled) elements.input.focus();
+}
+
+function normaliseText(value) {
+  return value.toLowerCase().replace(/\s+/g, ' ').trim();
+}
+
+function questionTerms(question) {
+  const compact = normaliseText(question).replace(/[、。！？!?「」『』（）()・,.]/g, '');
+  const latinTerms = compact.match(/[a-z0-9][a-z0-9+.#_-]{1,}/g) || [];
+  const japaneseBigrams = [];
+  for (let index = 0; index < compact.length - 1; index += 1) {
+    const term = compact.slice(index, index + 2);
+    if (/^[ぁ-んァ-ヶ一-龠]/.test(term)) japaneseBigrams.push(term);
+  }
+  return [...new Set([...latinTerms, ...japaneseBigrams])].filter((term) => term.length > 1);
+}
+
+function textFragmentUrl(url, phrase) {
+  const fragment = normaliseText(phrase).slice(0, 140);
+  return fragment ? `${url}#:~:text=${encodeURIComponent(fragment)}` : url;
+}
+
+function pickSnippet(text, terms) {
+  const sentences = text.split(/(?<=[。！？!?])\s*/).map((sentence) => sentence.trim()).filter(Boolean);
+  return sentences.find((sentence) => terms.some((term) => normaliseText(sentence).includes(term))) || sentences[0] || '';
+}
+
+function findRelevantBlogSource(question) {
+  const terms = questionTerms(question);
+  if (!terms.length || !blogSources.length) return null;
+  const ranked = blogSources.map((source) => {
+    const searchable = normaliseText(`${source.title} ${source.text}`);
+    const score = terms.reduce((total, term) => total + (searchable.includes(term) ? (normaliseText(source.title).includes(term) ? 3 : 1) : 0), 0);
+    return { ...source, score, snippet: pickSnippet(source.text, terms) };
+  }).sort((a, b) => b.score - a.score);
+  return ranked[0]?.score > 0 ? ranked[0] : null;
+}
+
+function blogContextFor(question) {
+  const source = findRelevantBlogSource(question);
+  if (source) {
+    return {
+      source,
+      context: `## 個人ブログから見つかった関連情報\n記事名: ${source.title}\nURL: ${source.url}\n本文抜粋: ${source.snippet || source.text.slice(0, 900)}\nこの情報を根拠にする場合は、記事名を示してください。`,
+    };
+  }
+  const titles = blogSources.slice(0, 8).map((item) => `- ${item.title}: ${item.url}`).join('\n');
+  return { source: null, context: titles ? `## 個人ブログの記事一覧\n${titles}\n質問に答える根拠が足りない場合は、記事一覧にないことを明確にしてください。` : '' };
+}
+
+async function loadBlogSources() {
+  if (blogSourcesPromise) return blogSourcesPromise;
+  blogSourcesPromise = (async () => {
+    try {
+      const home = await fetch(BLOG_HOME_URL);
+      if (!home.ok) throw new Error(`Blog index request failed: ${home.status}`);
+      const homeDocument = new DOMParser().parseFromString(await home.text(), 'text/html');
+      const links = [...homeDocument.querySelectorAll('.post-card h2 a, article h2 a, h2 a')]
+        .map((link) => ({ title: normaliseText(link.textContent || ''), url: new URL(link.getAttribute('href') || '', BLOG_HOME_URL).href }))
+        .filter((item) => item.title && item.url.startsWith(BLOG_HOME_URL))
+        .filter((item, index, all) => all.findIndex((candidate) => candidate.url === item.url) === index)
+        .slice(0, 8);
+      const pages = await Promise.all(links.map(async (item) => {
+        const response = await fetch(item.url);
+        if (!response.ok) return null;
+        const document = new DOMParser().parseFromString(await response.text(), 'text/html');
+        document.querySelectorAll('script, style, nav, header, footer').forEach((node) => node.remove());
+        const body = document.querySelector('article, main, .post-content') || document.body;
+        return { ...item, text: normaliseText(body?.textContent || '').slice(0, 7000) };
+      }));
+      blogSources = pages.filter((item) => item?.text);
+      console.info(`[Taisei AI chat] Loaded ${blogSources.length} blog sources.`);
+    } catch (error) {
+      console.warn('[Taisei AI chat] Blog sources could not be loaded.', error);
+      blogSources = [];
+    }
+    return blogSources;
+  })();
+  return blogSourcesPromise;
 }
 
 function showFailure(error) {
@@ -107,8 +188,10 @@ async function sendMessage() {
   setInputEnabled(false);
   addMessage('user', text);
   const replyElement = addMessage('assistant', '');
+  await loadBlogSources();
   const messages = [
     { role: 'system', content: SYSTEM_PROMPT },
+    { role: 'system', content: blogContextFor(text).context },
     ...history.slice(-MAX_HISTORY_MESSAGES),
     { role: 'user', content: text },
   ];
@@ -129,6 +212,19 @@ async function sendMessage() {
     if (!reply) reply = '申し訳ありません。返答を生成できませんでした。もう一度お試しください。';
     replyElement.textContent = reply;
     history = [...history, { role: 'user', content: text }, { role: 'assistant', content: reply }].slice(-MAX_HISTORY_MESSAGES);
+    const source = findRelevantBlogSource(text);
+    if (source) {
+      const link = document.createElement('a');
+      link.className = 'ai-chat-source-link';
+      link.href = textFragmentUrl(source.url, source.snippet);
+      link.textContent = `関連するブログ記事を開く: ${source.title} ↗`;
+      link.addEventListener('click', () => console.info('[Taisei AI chat] Opening blog source:', source.url));
+      elements.messages.append(link);
+      elements.messages.scrollTop = elements.messages.scrollHeight;
+      if (/(ブログ|記事|投稿|掲載|書いて|どこ|詳しく)/.test(text)) {
+        window.setTimeout(() => { window.location.assign(link.href); }, 900);
+      }
+    }
   } catch (error) {
     console.error('[Taisei AI chat] Inference error:', error);
     replyElement.classList.add('ai-chat-message--error');
@@ -172,6 +268,7 @@ function createWidget() {
     if (isOpen) { close(); return; }
     elements.window.hidden = false;
     elements.launcher.setAttribute('aria-expanded', 'true');
+    void loadBlogSources();
     void ensureEngine();
   });
   elements.form.addEventListener('submit', (event) => { event.preventDefault(); void sendMessage(); });

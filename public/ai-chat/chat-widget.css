@@ -27,6 +27,8 @@
 .ai-chat-message--assistant { align-self: flex-start; border: 1px solid #dbe4eb; border-top-left-radius: 3px; background: #fff; }
 .ai-chat-message--user { align-self: flex-end; border-top-right-radius: 3px; color: #fff; background: var(--ai-chat-primary-soft); }
 .ai-chat-message--error { border-color: #d85d5d; color: #8a2222; background: #fff6f6; }
+.ai-chat-source-link { display: block; margin-top: -4px; color: var(--ai-chat-primary-soft); font-size: 12px; font-weight: 700; line-height: 1.5; text-decoration: underline; text-underline-offset: 3px; }
+.ai-chat-source-link:hover, .ai-chat-source-link:focus-visible { color: var(--ai-chat-primary); outline: none; }
 .ai-chat-form { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--ai-chat-line); background: #fff; }
 .ai-chat-input { min-width: 0; flex: 1; min-height: 42px; max-height: 112px; resize: vertical; padding: 10px 11px; border: 1px solid #b9c8d4; border-radius: 8px; color: var(--ai-chat-ink); background: #fff; font: inherit; font-size: 14px; line-height: 1.45; }
 .ai-chat-input:focus { border-color: var(--ai-chat-primary-soft); outline: 3px solid rgba(134, 208, 196, .35); }
