@@ -1,4 +1,4 @@
-import { BLOG_HOME_URL, SYSTEM_PROMPT } from './persona.js';
+import { BLOG_HOME_URL, PORTFOLIO_HOME_URL, SYSTEM_PROMPT } from './persona.js';
 
 const MODELS = [
   'Llama-3.2-3B-Instruct-q4f16_1-MLC',
@@ -13,6 +13,38 @@ let history = [];
 let elements;
 let blogSources = [];
 let blogSourcesPromise = null;
+let portfolioSources = [];
+let portfolioSourcesPromise = null;
+let pendingExternalQuestion = null;
+let guidedNavigationStarted = false;
+
+function supportsGuideAnimation() {
+  return window.matchMedia('(min-width: 768px) and (hover: hover) and (pointer: fine)').matches
+    && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
+function guideToPage(url, title) {
+  if (guidedNavigationStarted) return;
+  guidedNavigationStarted = true;
+  if (!supportsGuideAnimation()) {
+    window.location.assign(url);
+    return;
+  }
+  document.querySelector('.ai-guide-character')?.remove();
+  const guide = document.createElement('div');
+  guide.className = 'ai-guide-character';
+  guide.setAttribute('aria-hidden', 'true');
+  const speech = document.createElement('span');
+  speech.className = 'ai-guide-speech';
+  speech.textContent = `${title} はこちらです`;
+  const image = document.createElement('img');
+  image.src = new URL('./images/taisei-guide.png', import.meta.url).href;
+  image.alt = '';
+  guide.append(speech, image);
+  document.body.append(guide);
+  window.requestAnimationFrame(() => guide.classList.add('ai-guide-character--walking'));
+  window.setTimeout(() => { window.location.assign(url); }, 2150);
+}
 
 function injectStylesheet() {
   if (document.querySelector('link[data-ai-chat-styles]')) return;
@@ -70,27 +102,30 @@ function pickSnippet(text, terms) {
   return sentences.find((sentence) => terms.some((term) => normaliseText(sentence).includes(term))) || sentences[0] || '';
 }
 
-function findRelevantBlogSource(question) {
+function allSources() {
+  return [...portfolioSources, ...blogSources];
+}
+
+function findRelevantSource(question) {
   const terms = questionTerms(question);
-  if (!terms.length || !blogSources.length) return null;
-  const ranked = blogSources.map((source) => {
+  if (!terms.length || !allSources().length) return null;
+  const ranked = allSources().map((source) => {
     const searchable = normaliseText(`${source.title} ${source.text}`);
     const score = terms.reduce((total, term) => total + (searchable.includes(term) ? (normaliseText(source.title).includes(term) ? 3 : 1) : 0), 0);
     return { ...source, score, snippet: pickSnippet(source.text, terms) };
   }).sort((a, b) => b.score - a.score);
-  return ranked[0]?.score > 0 ? ranked[0] : null;
+  return ranked[0]?.score >= 2 ? ranked[0] : null;
 }
 
-function blogContextFor(question) {
-  const source = findRelevantBlogSource(question);
+function sourceContextFor(question) {
+  const source = findRelevantSource(question);
   if (source) {
     return {
       source,
-      context: `## 個人ブログから見つかった関連情報\n記事名: ${source.title}\nURL: ${source.url}\n本文抜粋: ${source.snippet || source.text.slice(0, 900)}\nこの情報を根拠にする場合は、記事名を示してください。`,
+      context: `## ホームページに掲載されている情報\nページ名: ${source.title}\nURL: ${source.url}\n本文抜粋: ${source.snippet || source.text.slice(0, 1100)}\nこの情報だけを根拠に回答し、根拠にしたページ名を示してください。`,
     };
   }
-  const titles = blogSources.slice(0, 8).map((item) => `- ${item.title}: ${item.url}`).join('\n');
-  return { source: null, context: titles ? `## 個人ブログの記事一覧\n${titles}\n質問に答える根拠が足りない場合は、記事一覧にないことを明確にしてください。` : '' };
+  return { source: null, context: '' };
 }
 
 async function loadBlogSources() {
@@ -122,6 +157,58 @@ async function loadBlogSources() {
     return blogSources;
   })();
   return blogSourcesPromise;
+}
+
+async function loadPortfolioSources() {
+  if (portfolioSourcesPromise) return portfolioSourcesPromise;
+  portfolioSourcesPromise = (async () => {
+    try {
+      const rootResponse = await fetch(PORTFOLIO_HOME_URL);
+      if (!rootResponse.ok) throw new Error(`Portfolio index request failed: ${rootResponse.status}`);
+      const rootDocument = new DOMParser().parseFromString(await rootResponse.text(), 'text/html');
+      const workUrls = [...rootDocument.querySelectorAll('a[href*="/works/"]')]
+        .map((link) => new URL(link.getAttribute('href') || '', PORTFOLIO_HOME_URL).href)
+        .filter((url) => url.startsWith(`${PORTFOLIO_HOME_URL}works/`) && url !== `${PORTFOLIO_HOME_URL}works/`)
+        .filter((url, index, all) => all.indexOf(url) === index)
+        .slice(0, 10);
+      const urls = [...new Set([
+        PORTFOLIO_HOME_URL,
+        `${PORTFOLIO_HOME_URL}about/`,
+        `${PORTFOLIO_HOME_URL}works/`,
+        `${PORTFOLIO_HOME_URL}resources/`,
+        `${PORTFOLIO_HOME_URL}contact/`,
+        ...workUrls,
+      ])];
+      const pages = await Promise.all(urls.map(async (url) => {
+        const response = url === PORTFOLIO_HOME_URL ? rootResponse : await fetch(url);
+        if (!response.ok) return null;
+        const document = url === PORTFOLIO_HOME_URL ? rootDocument : new DOMParser().parseFromString(await response.text(), 'text/html');
+        document.querySelectorAll('script, style, nav, header, footer').forEach((node) => node.remove());
+        const body = document.querySelector('main, article') || document.body;
+        const title = normaliseText(document.querySelector('h1, h2')?.textContent || document.title || url);
+        return { title, url, text: normaliseText(body?.textContent || '').slice(0, 7000) };
+      }));
+      portfolioSources = pages.filter((item) => item?.text);
+      console.info(`[Taisei AI chat] Loaded ${portfolioSources.length} portfolio sources.`);
+    } catch (error) {
+      console.warn('[Taisei AI chat] Portfolio sources could not be loaded.', error);
+      portfolioSources = [];
+    }
+    return portfolioSources;
+  })();
+  return portfolioSourcesPromise;
+}
+
+async function loadSiteSources() {
+  await Promise.all([loadBlogSources(), loadPortfolioSources()]);
+}
+
+function confirmsExternalUse(text) {
+  return /^(はい|うん|お願いします|使っていい|許可|ok|okay|yes)[。！!、\s]*$/i.test(text);
+}
+
+function rejectsExternalUse(text) {
+  return /^(いいえ|いや|だめ|不要|使わない|no)[。！!、\s]*$/i.test(text);
 }
 
 function showFailure(error) {
@@ -188,11 +275,39 @@ async function sendMessage() {
   setInputEnabled(false);
   addMessage('user', text);
   const replyElement = addMessage('assistant', '');
-  await loadBlogSources();
+  await loadSiteSources();
+  let question = text;
+  let sourceInfo = sourceContextFor(question);
+  let externalUseAllowed = false;
+
+  if (pendingExternalQuestion) {
+    if (confirmsExternalUse(text)) {
+      question = pendingExternalQuestion;
+      pendingExternalQuestion = null;
+      externalUseAllowed = true;
+    } else if (rejectsExternalUse(text)) {
+      pendingExternalQuestion = null;
+      replyElement.textContent = '承知しました。ホームページ内の情報だけでは回答できないため、この質問にはお答えしません。';
+      setInputEnabled(true);
+      return;
+    } else {
+      pendingExternalQuestion = null;
+      sourceInfo = sourceContextFor(question);
+    }
+  }
+
+  if (!externalUseAllowed && !sourceInfo.source) {
+    pendingExternalQuestion = question;
+    replyElement.textContent = 'この質問に答える根拠は、ポートフォリオと個人ブログの公開ページ内では見つかりませんでした。ホームページ外の一般知識を使ってよいですか？ 使用する場合、その情報はこのホームページを出典としません。';
+    setInputEnabled(true);
+    return;
+  }
+
+  if (externalUseAllowed) replyElement.textContent = '【出典：このホームページ外の一般知識】\n';
   const messages = [
-    { role: 'system', content: [SYSTEM_PROMPT, blogContextFor(text).context].filter(Boolean).join('\n\n') },
+    { role: 'system', content: [SYSTEM_PROMPT, sourceInfo.context, externalUseAllowed ? 'ユーザーからホームページ外の一般知識の利用を許可されました。回答の先頭に必ず「【出典：このホームページ外の一般知識】」を付けてください。' : ''].filter(Boolean).join('\n\n') },
     ...history.slice(-MAX_HISTORY_MESSAGES),
-    { role: 'user', content: text },
+    { role: 'user', content: question },
   ];
 
   try {
@@ -202,7 +317,7 @@ async function sendMessage() {
       max_tokens: 512,
       stream: true,
     });
-    let reply = '';
+    let reply = externalUseAllowed ? '【出典：このホームページ外の一般知識】\n' : '';
     for await (const chunk of chunks) {
       reply += chunk.choices[0]?.delta?.content || '';
       replyElement.textContent = reply;
@@ -210,18 +325,22 @@ async function sendMessage() {
     }
     if (!reply) reply = '申し訳ありません。返答を生成できませんでした。もう一度お試しください。';
     replyElement.textContent = reply;
-    history = [...history, { role: 'user', content: text }, { role: 'assistant', content: reply }].slice(-MAX_HISTORY_MESSAGES);
-    const source = findRelevantBlogSource(text);
+    history = [...history, { role: 'user', content: question }, { role: 'assistant', content: reply }].slice(-MAX_HISTORY_MESSAGES);
+    const source = sourceInfo.source;
     if (source) {
       const link = document.createElement('a');
       link.className = 'ai-chat-source-link';
       link.href = textFragmentUrl(source.url, source.snippet);
       link.textContent = `関連するブログ記事を開く: ${source.title} ↗`;
-      link.addEventListener('click', () => console.info('[Taisei AI chat] Opening blog source:', source.url));
+      link.addEventListener('click', (event) => {
+        event.preventDefault();
+        console.info('[Taisei AI chat] Opening blog source:', source.url);
+        guideToPage(link.href, source.title);
+      });
       elements.messages.append(link);
       elements.messages.scrollTop = elements.messages.scrollHeight;
-      if (/(ブログ|記事|投稿|掲載|書いて|どこ|詳しく)/.test(text)) {
-        window.setTimeout(() => { window.location.assign(link.href); }, 900);
+      if (/(ブログ|記事|投稿|掲載|書いて|どこ|詳しく|ページ)/.test(question)) {
+        window.setTimeout(() => { guideToPage(link.href, source.title); }, 900);
       }
     }
   } catch (error) {
@@ -267,7 +386,7 @@ function createWidget() {
     if (isOpen) { close(); return; }
     elements.window.hidden = false;
     elements.launcher.setAttribute('aria-expanded', 'true');
-    void loadBlogSources();
+    void loadSiteSources();
     void ensureEngine();
   });
   elements.form.addEventListener('submit', (event) => { event.preventDefault(); void sendMessage(); });

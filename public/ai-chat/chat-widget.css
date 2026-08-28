@@ -38,6 +38,27 @@
 .ai-chat-send:disabled, .ai-chat-input:disabled { cursor: not-allowed; opacity: .52; }
 .ai-chat-retry { margin: 8px 0 0; padding: 8px 10px; }
 .ai-chat-unavailable { position: fixed; right: 18px; bottom: 18px; width: min(330px, calc(100vw - 36px)); padding: 12px 14px; border: 1px solid var(--ai-chat-line); border-radius: 10px; color: var(--ai-chat-ink); background: #fff; box-shadow: 0 12px 28px rgba(7, 29, 66, .16); font-size: 12px; line-height: 1.6; }
+.ai-guide-character { position: fixed; right: 34px; bottom: 42px; z-index: 90; width: 132px; pointer-events: none; opacity: 0; transform: translate(0, 26px) scale(.58); transform-origin: 50% 100%; }
+.ai-guide-character img { display: block; width: 100%; height: auto; filter: drop-shadow(0 14px 12px rgba(7, 29, 66, .26)); animation: ai-guide-idle .9s ease-in-out infinite alternate; }
+.ai-guide-character--walking { animation: ai-guide-walk-across 2.15s cubic-bezier(.21,.71,.35,1) forwards; }
+.ai-guide-character--walking img { animation: ai-guide-steps .22s steps(2, end) infinite; }
+.ai-guide-speech { position: absolute; right: 72%; bottom: 76%; min-width: max-content; max-width: 230px; padding: 8px 11px; border: 1px solid rgba(7,29,66,.16); border-radius: 10px; color: var(--ai-chat-primary); background: #fff; box-shadow: 0 8px 20px rgba(7,29,66,.15); font-size: 12px; font-weight: 700; line-height: 1.45; opacity: 0; }
+.ai-guide-speech::after { content: ''; position: absolute; right: 14px; bottom: -6px; width: 10px; height: 10px; border-right: 1px solid rgba(7,29,66,.16); border-bottom: 1px solid rgba(7,29,66,.16); background: #fff; transform: rotate(45deg); }
+.ai-guide-character--walking .ai-guide-speech { animation: ai-guide-speech 1.5s .36s ease forwards; }
+
+@keyframes ai-guide-walk-across {
+  0% { opacity: 0; transform: translate(0, 30px) scale(.58); }
+  12% { opacity: 1; transform: translate(-18px, -4px) scale(.68); }
+  40% { transform: translate(-31vw, -18vh) scale(.76); }
+  72% { transform: translate(-48vw, -30vh) scale(.83); }
+  88% { opacity: 1; transform: translate(-52vw, -32vh) scale(.86) rotate(-3deg); }
+  100% { opacity: 0; transform: translate(-54vw, -34vh) scale(.86) rotate(2deg); }
+}
+@keyframes ai-guide-idle { from { transform: translateY(0); } to { transform: translateY(-5px); } }
+@keyframes ai-guide-steps { 0%, 100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-8px) rotate(1deg); } }
+@keyframes ai-guide-speech { 0% { opacity: 0; transform: translateY(8px) scale(.92); } 20%, 82% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-6px) scale(.96); } }
+
+@media (prefers-reduced-motion: reduce) { .ai-guide-character, .ai-guide-character img, .ai-guide-speech { animation: none !important; } }
 
 @media (max-width: 600px) {
   #taisei-ai-chat { right: 16px; bottom: 16px; }
