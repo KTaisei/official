@@ -80,7 +80,7 @@
     },
     {
       "slug": "optimization",
-      "title": "少ない質問で理解度を推定するナレッジグラフシステム",
+      "title": "少ない質問で理解度を推定する",
       "tags": [
         "python",
         "KnowlegeGraph",
