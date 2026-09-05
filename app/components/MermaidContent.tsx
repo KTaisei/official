@@ -55,7 +55,13 @@ export default function MermaidContent({ content }: { content: string }) {
 
   let diagramIndex = 0;
   return <>{segments.map((segment, index) => {
-    if (segment.type === 'markdown') return <ReactMarkdown key={`markdown-${index}`} remarkPlugins={[remarkGfm]}>{segment.value}</ReactMarkdown>;
+    if (segment.type === 'markdown') return <ReactMarkdown
+      key={`markdown-${index}`}
+      remarkPlugins={[remarkGfm]}
+      components={{
+        img: ({ src, alt }) => typeof src === 'string' ? <a className="article-image-link" href={src} target="_blank" rel="noreferrer" title="元のサイズで開く"><img className="article-image" src={src} alt={alt || ''} /></a> : null,
+      }}
+    >{segment.value}</ReactMarkdown>;
     const svg = svgs[diagramIndex++] ?? '';
     return <div className="mermaid-diagram" key={`diagram-${index}`} dangerouslySetInnerHTML={{ __html: svg }} />;
   })}</>;
