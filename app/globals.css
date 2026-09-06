@@ -8,6 +8,8 @@
 .tech-article pre code{padding:0;background:transparent;color:inherit}
 .tech-article .article-image-link{display:block;width:fit-content;max-width:100%;margin:28px auto;cursor:zoom-in}.tech-article .article-image{display:block;max-width:min(100%,680px);max-height:480px;width:auto;height:auto;object-fit:contain;border:1px solid var(--line);box-shadow:0 10px 28px rgba(7,29,66,.12)}
 
+@media (max-width:720px){html,body{width:100%;max-width:100%;overflow-x:clip}body>main{width:100%;min-width:0;max-width:100%}}
+
 @media (max-width: 720px) {
   body { --mobile-gutter: clamp(12px, 4vw, 28px); }
   body .header { height: 64px; padding: 0 var(--mobile-gutter); }
