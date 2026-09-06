@@ -9,6 +9,55 @@
 .tech-article .article-image-link{display:block;width:fit-content;max-width:100%;margin:28px auto;cursor:zoom-in}.tech-article .article-image{display:block;max-width:min(100%,680px);max-height:480px;width:auto;height:auto;object-fit:contain;border:1px solid var(--line);box-shadow:0 10px 28px rgba(7,29,66,.12)}
 
 @media (max-width: 720px) {
+  body .header { height: 64px; padding: 0 18px; }
+  body .header .brand { min-width: 0; gap: 8px; font-size: 11px; letter-spacing: .07em; }
+  body .header .brand span { font-size: 22px; }
+  body .menu { padding: 10px 0 10px 14px; color: var(--navy); }
+  body .header nav { top: 63px; padding: 20px 18px 24px; box-shadow: 0 10px 18px rgba(7,29,66,.08); }
+  body .header nav a { width: 100%; padding: 5px 0; }
+  body .hero { min-height: 250px; }
+  body .hello { font-size: clamp(58px, 20vw, 100px); }
+  body .section { padding: 64px 18px; }
+  body .section h2 { font-size: clamp(29px, 9vw, 39px); }
+  body .lead { font-size: 15px; line-height: 1.95; }
+  body .news-list a { padding: 18px 0; font-size: 14px; }
+  body .news-list span { overflow-wrap: anywhere; }
+  body .card { min-height: 280px; padding: 22px; }
+  body .card strong { font-size: 25px; line-height: 1.35; overflow-wrap: anywhere; }
+  body .card-art { width: 220px; height: 220px; }
+  body .all-works-link { margin-top: 30px; text-align: left; }
+  body .contact { padding: 65px 18px; }
+  body .contact h2 { font-size: clamp(31px, 10vw, 43px); }
+  body .contact-mail { font-size: 17px; overflow-wrap: anywhere; }
+  body footer { padding: 44px 18px 24px; gap: 36px; }
+  body .footer-links { gap: 42px; }
+
+  body .inner-page { padding: 24px 18px 68px; }
+  body .inner-page > .brand { margin-bottom: 58px; font-size: 12px; }
+  body .inner-page > .section-kicker { margin-bottom: 12px; font-size: 10px; }
+  body .inner-page h1 { font-size: clamp(32px, 10vw, 43px); line-height: 1.25; letter-spacing: -.045em; overflow-wrap: anywhere; margin-bottom: 20px; }
+  body .inner-page .lead { margin: 20px 0; }
+  body .career, body .work-page-list { margin: 40px 0; }
+  body .career { grid-template-columns: 1fr; border-top: 1px solid var(--line); }
+  body .career b { padding: 16px 0 4px; border-bottom: 0; }
+  body .career p { padding: 4px 0 17px; font-size: 14px; line-height: 1.8; }
+  body .work-page-list article { padding: 25px 0; }
+  body .work-page-list h2 { font-size: 23px; line-height: 1.4; overflow-wrap: anywhere; }
+  body .work-page-list p { font-size: 14px; line-height: 1.8; }
+  body .work-page-list em { display: inline-block; margin: 0 5px 6px 0; }
+  body .resource-section { margin: 46px 0; }
+  body .resource-section > h2 { font-size: 24px; line-height: 1.4; }
+  body .resource-card { grid-template-columns: 1fr 20px; gap: 7px 12px; padding: 18px 0; }
+  body .resource-card span { grid-column: 1; font-size: 11px; }
+  body .resource-card strong { grid-column: 1; font-size: 15px; line-height: 1.6; overflow-wrap: anywhere; }
+  body .resource-card p { grid-column: 1; font-size: 13px; line-height: 1.75; }
+  body .resource-card b { grid-column: 2; grid-row: 1 / span 3; align-self: center; }
+  body .presentation { gap: 16px; padding: 20px 0; }
+  body .presentation h3 { font-size: 21px; }
+  body .presentation iframe { height: 210px; }
+}
+
+@media (max-width: 720px) {
   .inner-page.project-detail { padding: 24px 18px 68px; overflow-x: clip; }
   .inner-page.project-detail > .brand { margin-bottom: 58px; font-size: 12px; }
   .project-detail > .section-kicker { margin-bottom: 12px; font-size: 10px; letter-spacing: .13em; }
