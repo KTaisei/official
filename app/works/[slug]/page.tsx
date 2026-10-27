@@ -1,4 +1,5 @@
 import data from '../../../content/projects.json';
+import type { Metadata, ResolvingMetadata } from 'next';
 import { notFound } from 'next/navigation';
 import MermaidContent from '../../components/MermaidContent';
 
@@ -6,6 +7,22 @@ type RelatedLink = { label?: string; url: string };
 type ProjectWithLinks = (typeof data.projects)[number] & { link?: string; relatedLinks?: RelatedLink[] };
 
 export function generateStaticParams() { return data.projects.map(project => ({ slug: project.slug })); }
+export async function generateMetadata(
+  { params }: { params: Promise<{ slug: string }> },
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  const { slug } = await params;
+  const project = data.projects.find(item => item.slug === slug);
+  if (!project) notFound();
+  const inherited = await parent;
+  const title = `${project.title.trim()} | TAISEI / Portfolio`;
+  return {
+    title,
+    description: project.description,
+    openGraph: { ...inherited.openGraph, title, description: project.description },
+    twitter: { ...inherited.twitter, title, description: project.description },
+  };
+}
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params; const project = data.projects.find(item => item.slug === slug) as ProjectWithLinks | undefined; if (!project) notFound();
   const updatedAt=project.updatedAt?new Date(`${project.updatedAt}T00:00:00`):null;

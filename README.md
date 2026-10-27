@@ -2,6 +2,12 @@
 
 Next.js static portfolio with a Decap CMS editing surface at `/admin`.
 
+## SNSでのリンクプレビュー
+
+OGP と X の大きな画像付きカードを設定しています。共有画像は `public/og.png`、プロジェクト詳細のタイトル・説明文は `content/projects.json` を使用します。
+
+公開ドメインは `NEXT_PUBLIC_SITE_URL`（既定値: `https://ktaisei.github.io`）、公開サブパスは `NEXT_PUBLIC_BASE_PATH`（GitHub Actions では `/official`）で指定します。設定の変更は再ビルド・公開後に反映されます。SNS側のキャッシュにより、プレビューの更新に時間がかかる場合があります。
+
 ## First deployment
 
 1. In `public/admin/config.yml`, replace the repository and Worker placeholders.
